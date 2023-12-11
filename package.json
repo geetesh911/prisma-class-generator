@@ -1,6 +1,6 @@
 {
 	"name": "@geetesh911/prisma-class-generator",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Class generator from Prisma schema",
 	"main": "dist/index.js",
 	"license": "MIT",
@@ -18,6 +18,7 @@
 	"scripts": {
 		"format": "prettier --write \"src/**/*.ts\"",
 		"dev": "node -r ts-node/register src/index.ts",
+		"build": "tsc --build",
 		"generate:postgresql": "prisma generate --schema prisma/postgresql.prisma",
 		"generate:mysql": "prisma generate --schema prisma/mysql.prisma",
 		"generate:mongodb": "prisma generate --schema prisma/mongodb.prisma"
@@ -47,6 +48,7 @@
 		"swagger-ui-express": "^4.4.0",
 		"ts-node": "^10.9.1",
 		"ts-toolbelt": "^9.6.0",
+		"tsc": "^2.0.4",
 		"typescript": "^5.0.4"
 	},
 	"_moduleAliases": {
