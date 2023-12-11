@@ -1,5 +1,5 @@
 {
-	"name": "prisma-class-generator",
+	"name": "@geetesh911/-class-generator",
 	"version": "0.0.1",
 	"description": "Class generator from Prisma schema",
 	"main": "dist/index.js",
