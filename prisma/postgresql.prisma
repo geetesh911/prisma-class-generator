@@ -45,6 +45,9 @@ model Product {
   company       Company            @relation(fields: [companyId], references: [id])
   createdAt     DateTime           @default(now()) @db.Timestamp(6)
   updatedAt     DateTime           @updatedAt @db.Timestamp(6)
+  subProducts   Product?           @relation("subProduct", fields: [productId], references: [id])
+  productId     Int
+  Product       Product[]          @relation("subProduct")
 }
 
 model Category {

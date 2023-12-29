@@ -254,6 +254,8 @@ export class ProductDto extends IntersectionType(
     -   sets output path. default is **'../src/\_gen/prisma-class'**
 -   _useSwagger_
     -   generates swggger decorator. default value is **true**
+-   _useCqrs_
+    -   generates classes which extends AggregateRoot (from `@nestjs/cqrs` module). default value is **false**
 -   _makeIndexFile_
     -   makes index file, default value is **true**
 -   _separateRelationFields_

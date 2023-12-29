@@ -52,6 +52,7 @@ export interface ConvertModelInput {
 	postfix?: string
 	useGraphQL?: boolean
 	useCqrs?: boolean
+	separateRelationFields?: boolean
 }
 
 export class PrismaConvertor {
@@ -193,6 +194,7 @@ export class PrismaConvertor {
 				extractRelationFields: null,
 				useGraphQL: false,
 				useCqrs: false,
+				separateRelationFields: false,
 			},
 			input,
 		)
@@ -202,6 +204,7 @@ export class PrismaConvertor {
 			postfix,
 			useGraphQL,
 			useCqrs,
+			separateRelationFields,
 		} = options
 
 		/** set class name */
@@ -215,7 +218,11 @@ export class PrismaConvertor {
 		const relationTypes = uniquify(
 			model.fields
 				.filter(
-					(field) => field.relationName && model.name !== field.type,
+					(field) =>
+						field.relationName &&
+						(separateRelationFields
+							? true
+							: model.name !== field.type),
 				)
 				.map((v) => v.type),
 		)
@@ -305,6 +312,8 @@ export class PrismaConvertor {
 						postfix: 'Relations',
 						useGraphQL: this.config.useGraphQL,
 						useCqrs: this.config.useCqrs,
+						separateRelationFields:
+							this.config.separateRelationFields,
 					}),
 				),
 				...models.map((model) =>
@@ -313,6 +322,8 @@ export class PrismaConvertor {
 						extractRelationFields: false,
 						useGraphQL: this.config.useGraphQL,
 						useCqrs: this.config.useCqrs,
+						separateRelationFields:
+							this.config.separateRelationFields,
 					}),
 				),
 				// mongodb Types support
@@ -322,6 +333,8 @@ export class PrismaConvertor {
 						extractRelationFields: true,
 						useGraphQL: this.config.useGraphQL,
 						useCqrs: this.config.useCqrs,
+						separateRelationFields:
+							this.config.separateRelationFields,
 					}),
 				),
 			]
@@ -333,6 +346,7 @@ export class PrismaConvertor {
 					model,
 					useGraphQL: this.config.useGraphQL,
 					useCqrs: this.config.useCqrs,
+					separateRelationFields: this.config.separateRelationFields,
 				}),
 			),
 			// mongodb Types support
@@ -341,6 +355,7 @@ export class PrismaConvertor {
 					model,
 					useGraphQL: this.config.useGraphQL,
 					useCqrs: this.config.useCqrs,
+					separateRelationFields: this.config.separateRelationFields,
 				}),
 			),
 		]
