@@ -12,8 +12,8 @@ generator prismaClassGenerator {
   provider               = "node -r ts-node/register/transpile-only src/index.ts"
   output                 = "../src/_gen/prisma-class"
   dryRun                 = "false"
-  useCqrs                = true
-  useSwagger             = false
+  createAggregateRoot    = true
+  useSwagger             = true
   separateRelationFields = true
 }
 

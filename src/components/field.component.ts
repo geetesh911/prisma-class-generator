@@ -31,10 +31,8 @@ export class FieldComponent extends BaseComponent implements Echoable {
 			} else {
 				defaultValue = `= ${this.default}`
 			}
-		} else {
-			if (this.useUndefinedDefault === true) {
-				defaultValue = `= undefined`
-			}
+		} else if (this.useUndefinedDefault === true) {
+			defaultValue = `= undefined`
 		}
 
 		return FIELD_TEMPLATE.replace('#!{NAME}', name)
@@ -42,9 +40,5 @@ export class FieldComponent extends BaseComponent implements Echoable {
 			.replace('#!{TYPE}', type)
 			.replace('#!{DECORATORS}', this.echoDecorators())
 			.replace('#!{DEFAULT}', defaultValue)
-	}
-
-	constructor(obj: { name: string; useUndefinedDefault: boolean }) {
-		super(obj)
 	}
 }

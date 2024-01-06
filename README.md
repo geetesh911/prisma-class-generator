@@ -33,13 +33,13 @@ Using this library, it becomes possible.
 export class Company {
 	@ApiProperty({ type: Number }) // swagger
 	@Field((type) => Int) // TypeGraphQL
-	id: number
+	id: number;
 
 	@ApiProperty({ type: String }) // swagger
-	name: string
+	name: string;
 
 	@ApiProperty({ type: Boolean }) // swagger
-	isUse: boolean
+	isUse: boolean;
 }
 ```
 
@@ -47,9 +47,9 @@ If you set the _separateRelationFields_ option to **true** and generate separate
 This example below is using methods from the `@nestjs/swagger` package. This example creates a class with all of the properties of the Product class and the category relational property from the generated relational class.
 
 ```typescript
-import { IntersectionType, PickType } from '@nestjs/swagger'
-import { Product } from './product'
-import { ProductRelations } from './product_relations'
+import { IntersectionType, PickType } from '@nestjs/swagger';
+import { Product } from './product';
+import { ProductRelations } from './product_relations';
 
 export class ProductDto extends IntersectionType(
 	Product,
@@ -119,111 +119,111 @@ export class ProductDto extends IntersectionType(
 
     ```typescript
     // category.ts
-    import { Product } from './product'
-    import { ApiProperty } from '@nestjs/swagger'
+    import { Product } from './product';
+    import { ApiProperty } from '@nestjs/swagger';
 
     export class Category {
     	@ApiProperty({ type: Number })
-    	id: number
+    	id: number;
 
     	@ApiProperty({ isArray: true, type: () => Product })
-    	products: Product
+    	products: Product;
     }
     ```
 
     ```typescript
     // product.ts
-    import { Product } from './product'
-    import { ApiProperty } from '@nestjs/swagger'
+    import { Product } from './product';
+    import { ApiProperty } from '@nestjs/swagger';
 
     export class Company {
     	@ApiProperty({ type: Number })
-    	id: number
+    	id: number;
 
     	@ApiProperty({ type: String })
-    	name: string
+    	name: string;
 
     	@ApiProperty({ type: Bigint })
-    	totalIncome: bigint
+    	totalIncome: bigint;
 
     	@ApiProperty({ type: Number })
-    	lat: number
+    	lat: number;
 
     	@ApiProperty({ type: Number })
-    	lng: number
+    	lng: number;
 
     	@ApiProperty({ type: Buffer })
-    	by: Buffer
+    	by: Buffer;
 
     	@ApiProperty({ isArray: true, type: () => Product })
-    	products: Product
+    	products: Product;
     }
     ```
 
     ```typescript
     // category.ts
-    import { Category } from './category'
-    import { Company } from './company'
-    import { ProductType } from '@prisma/client'
-    import { ApiProperty } from '@nestjs/swagger'
+    import { Category } from './category';
+    import { Company } from './company';
+    import { ProductType } from '@prisma/client';
+    import { ApiProperty } from '@nestjs/swagger';
 
     export class Product {
     	@ApiProperty({ type: Number })
-    	id: number
+    	id: number;
 
     	@ApiProperty({ type: String })
-    	title: string
+    	title: string;
 
     	@ApiProperty({ type: String })
-    	desc: string
+    	desc: string;
 
     	@ApiProperty()
-    	images: any
+    	images: any;
 
     	@ApiProperty({ type: Boolean })
-    	isShown: boolean
+    	isShown: boolean;
 
     	@ApiProperty({ type: Number })
-    	stock: number
+    	stock: number;
 
     	@ApiProperty({ enum: ProductType, enumName: 'ProductType' })
-    	type: ProductType
+    	type: ProductType;
 
     	@ApiProperty({ type: Number })
-    	averageRating: number
+    	averageRating: number;
 
     	@ApiProperty({ type: Number })
-    	categoryId: number
+    	categoryId: number;
 
     	@ApiProperty({ type: Number })
-    	companyId: number
+    	companyId: number;
 
     	@ApiProperty({ type: () => Category })
-    	category: Category
+    	category: Category;
 
     	@ApiProperty({ type: () => Company })
-    	company: Company
+    	company: Company;
 
     	@ApiProperty({ type: Date })
-    	createdAt: Date
+    	createdAt: Date;
 
     	@ApiProperty({ type: Date })
-    	updatedAt: Date
+    	updatedAt: Date;
     }
     ```
 
     ```typescript
     // index.ts
-    import { Product as _Product } from './product'
-    import { Category as _Category } from './category'
-    import { Company as _Company } from './company'
+    import { Product as _Product } from './product';
+    import { Category as _Category } from './category';
+    import { Company as _Company } from './company';
 
     export namespace PrismaModel {
     	export class Product extends _Product {}
     	export class Category extends _Category {}
     	export class Company extends _Company {}
 
-    	export const extraModels = [Product, Category, Company]
+    	export const extraModels = [Product, Category, Company];
     }
     ```
 
@@ -236,11 +236,11 @@ export class ProductDto extends IntersectionType(
 
     ```typescript
     // main.ts in Nest.JS application
-    import { PrismaModel } from './_gen/prisma-class'
+    import { PrismaModel } from './_gen/prisma-class';
 
     const document = SwaggerModule.createDocument(app, options, {
     	extraModels: [...PrismaModel.extraModels],
-    })
+    });
     ```
 
     You can also disable it through the _makeIndexFile_ option.
@@ -254,7 +254,7 @@ export class ProductDto extends IntersectionType(
     -   sets output path. default is **'../src/\_gen/prisma-class'**
 -   _useSwagger_
     -   generates swggger decorator. default value is **true**
--   _useCqrs_
+-   _createAggregateRoot_
     -   generates classes which extends AggregateRoot (from `@nestjs/cqrs` module). default value is **false**
 -   _makeIndexFile_
     -   makes index file, default value is **true**
@@ -308,3 +308,5 @@ This is because if too much is provided, the library becomes less adaptable acco
 No, but of course, it goes well with NestJS. I'm also planning to support the library related to NestJS.
 
 But even if you don't use NestJS, this library will be useful for you if you use class decorator based on reflect-metadata to develop web services.
+
+NOTE: This repository is the extension of `prisma-class-generator`.
