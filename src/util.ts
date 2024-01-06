@@ -25,7 +25,7 @@ export const uniquify = <T>(src: T[]): T[] => {
 };
 
 export const arrayify = (src: string): string => {
-	return src + '[]';
+	return `[${src}]`;
 };
 
 export const wrapArrowFunction = (field: DMMF.Field): string => {
