@@ -1,4 +1,4 @@
-import { snakeCase } from 'change-case';
+import { paramCase } from 'change-case';
 import { ClassComponent } from './class.component';
 import * as path from 'path';
 import { getRelativeTSPath, prettierFormat, writeTSFile } from '../util';
@@ -49,7 +49,7 @@ export class FileComponent implements Echoable {
 		const { classComponent, output } = input;
 		this._prismaClass = classComponent;
 		this.dir = path.resolve(output);
-		this.filename = `${snakeCase(classComponent.name)}.ts`;
+		this.filename = `${paramCase(classComponent.name)}.ts`;
 		this.resolveImports();
 	}
 
@@ -86,12 +86,22 @@ export class FileComponent implements Echoable {
 			this.registerImport('ID', '@nestjs/graphql');
 			this.registerImport('Int', '@nestjs/graphql');
 			this.registerImport('registerEnumType', '@nestjs/graphql');
-			this.registerImport('GraphQLJSONObject', 'graphql-type-json');
+			this.registerImport('GraphQLJSON', 'graphql-type-json');
 		}
 
 		if (this.prismaClass.createAggregateRoot) {
 			this.registerImport('AggregateRoot', '@nestjs/cqrs');
 		}
+
+		this.prismaClass.decorators.forEach((decorator) => {
+			this.registerImport(decorator.name, decorator.importFrom);
+		});
+
+		this.prismaClass.fields.forEach((field) => {
+			field.decorators.forEach((decorator) => {
+				this.registerImport(decorator.name, decorator.importFrom);
+			});
+		});
 
 		this.prismaClass.enumTypes.forEach((enumName) => {
 			this.registerImport(enumName, generator.getClientImportPath());
@@ -102,16 +112,6 @@ export class FileComponent implements Echoable {
 				`${relationClassName}`,
 				FileComponent.TEMP_PREFIX + relationClassName,
 			);
-		});
-
-		this.prismaClass.decorators.forEach((decorator) => {
-			this.registerImport(decorator.name, decorator.importFrom);
-		});
-
-		this.prismaClass.fields.forEach((field) => {
-			field.decorators.forEach((decorator) => {
-				this.registerImport(decorator.name, decorator.importFrom);
-			});
 		});
 
 		if (this.prismaClass.types) {

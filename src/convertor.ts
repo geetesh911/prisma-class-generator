@@ -104,13 +104,13 @@ export class PrismaConvertor {
 			importFrom: '@nestjs/graphql',
 		});
 		if (dmmfField.isId) {
-			decorator.params.push(`(type) => ID`);
+			decorator.params.push(`() => ID`);
 			return decorator;
 		}
 		const isJson = dmmfField.type === 'Json';
 
 		if (isJson) {
-			decorator.params.push(`(type) => GraphQLJSONObject`);
+			decorator.params.push(`() => GraphQLJSON`);
 		}
 
 		let type = this.getPrimitiveMapTypeFromDMMF(dmmfField);
@@ -123,7 +123,7 @@ export class PrismaConvertor {
 			if (dmmfField.isList) {
 				grahQLType = `[${grahQLType}]`;
 			}
-			decorator.params.push(`(type) => ${grahQLType}`);
+			decorator.params.push(`() => ${grahQLType}`);
 		}
 
 		if (dmmfField.relationName) {
@@ -131,7 +131,7 @@ export class PrismaConvertor {
 			if (dmmfField.isList) {
 				type = `[${type}]`;
 			}
-			decorator.params.push(`(type) => ${type}`);
+			decorator.params.push(`() => ${type}`);
 		}
 
 		if (dmmfField.kind === 'enum') {
@@ -139,7 +139,7 @@ export class PrismaConvertor {
 			if (dmmfField.isList) {
 				type = arrayify(type);
 			}
-			decorator.params.push(`(type) => ${type}`);
+			decorator.params.push(`() => ${type}`);
 		}
 
 		if (dmmfField.isRequired === false) {

@@ -1,21 +1,21 @@
-import { Echoable } from '../interfaces/echoable'
+import { Echoable } from '../interfaces/echoable';
 
 export class DecoratorComponent implements Echoable {
-	name: string
-	params: any[] = []
-	importFrom: string
+	name: string;
+	params: any[] = [];
+	importFrom: string;
 
 	constructor(input: {
-		name: string
-		params?: any | any[]
-		importFrom: string
+		name: string;
+		params?: any | any[];
+		importFrom: string;
 	}) {
-		const { name, params, importFrom } = input
-		this.name = name
+		const { name, params, importFrom } = input;
+		this.name = name;
 		if (params) {
-			this.params = Array.isArray(params) ? params : [params]
+			this.params = Array.isArray(params) ? params : [params];
 		}
-		this.importFrom = importFrom
+		this.importFrom = importFrom;
 	}
 
 	echo() {
@@ -26,20 +26,20 @@ export class DecoratorComponent implements Echoable {
 						`{${Object.entries(param)
 							.map(([k, v]) => `${k}: ${v}`)
 							.join(', ')}}`,
-					)
+					);
 				}
 			} else {
-				result.push(param)
+				result.push(param);
 			}
-			return result
-		}, [])
-		return `@${this.name}(${content.join(', ')})`
+			return result;
+		}, []);
+		return `@${this.name}(${content.join(', ')})`;
 	}
 
 	add(param: any) {
 		if (this.params.includes(param)) {
-			return
+			return;
 		}
-		this.params.push(param)
+		this.params.push(param);
 	}
 }

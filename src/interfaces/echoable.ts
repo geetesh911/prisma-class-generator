@@ -1,3 +1,3 @@
 export interface Echoable {
-	echo(): void
+	echo(): void;
 }

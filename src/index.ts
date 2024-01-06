@@ -1,7 +1,7 @@
-import { generatorHandler, GeneratorOptions } from '@prisma/generator-helper'
-import { GENERATOR_NAME, PrismaClassGenerator } from './generator'
-import { log } from './util'
-import { handleGenerateError } from './error-handler'
+import { generatorHandler, GeneratorOptions } from '@prisma/generator-helper';
+import { GENERATOR_NAME, PrismaClassGenerator } from './generator';
+import { log } from './util';
+import { handleGenerateError } from './error-handler';
 
 generatorHandler({
 	onManifest: () => ({
@@ -11,12 +11,12 @@ generatorHandler({
 	}),
 	onGenerate: async (options: GeneratorOptions) => {
 		try {
-			await PrismaClassGenerator.getInstance(options).run()
+			await PrismaClassGenerator.getInstance(options).run();
 		} catch (e) {
-			handleGenerateError(e)
-			return
+			handleGenerateError(e);
+			return;
 		}
 	},
-})
+});
 
-log('Handler Registered.')
+log('Handler Registered.');

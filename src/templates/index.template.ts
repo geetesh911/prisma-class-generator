@@ -6,4 +6,4 @@ export namespace PrismaModel {
 	export const extraModels = [
 		#!{CLASSES}
 	]
-}`
+}`;

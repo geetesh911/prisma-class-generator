@@ -5,4 +5,4 @@ export class #!{NAME} #!{EXTENDS} {
 #!{FIELDS}
 }
 #!{EXTRA}
-`
+`;
