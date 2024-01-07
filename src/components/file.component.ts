@@ -9,6 +9,7 @@ import { ImportComponent } from './import.component';
 export class FileComponent implements Echoable {
 	private _dir?: string;
 	private _filename?: string;
+	private _foldername?: string;
 	private _imports?: ImportComponent[] = [];
 	private _prismaClass: ClassComponent;
 	static TEMP_PREFIX = '__TEMPORARY_CLASS_PATH__';
@@ -27,6 +28,14 @@ export class FileComponent implements Echoable {
 
 	public set filename(value) {
 		this._filename = value;
+	}
+
+	public get foldername() {
+		return this._foldername;
+	}
+
+	public set foldername(value) {
+		this._foldername = value;
 	}
 
 	public get imports() {
@@ -50,6 +59,7 @@ export class FileComponent implements Echoable {
 		this._prismaClass = classComponent;
 		this.dir = path.resolve(output);
 		this.filename = `${paramCase(classComponent.name)}.ts`;
+		this.foldername = paramCase(classComponent.model.name);
 		this.resolveImports();
 	}
 
@@ -123,7 +133,10 @@ export class FileComponent implements Echoable {
 
 	write(dryRun: boolean) {
 		const generator = PrismaClassGenerator.getInstance();
-		const filePath = path.resolve(this.dir, this.filename);
+		const filePath = path.resolve(
+			this.dir + '/' + this.foldername,
+			this.filename,
+		);
 		const content = prettierFormat(this.echo(), generator.prettierOptions);
 		writeTSFile(filePath, content, dryRun);
 	}
@@ -133,6 +146,6 @@ export class FileComponent implements Echoable {
 	}
 
 	getPath() {
-		return path.resolve(this.dir, this.filename);
+		return path.resolve(this.dir + '/' + this.foldername, this.filename);
 	}
 }

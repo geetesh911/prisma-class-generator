@@ -2,9 +2,11 @@ import { Echoable } from '../interfaces/echoable';
 import { FieldComponent } from './field.component';
 import { CLASS_TEMPLATE } from '../templates/class.template';
 import { BaseComponent } from './base.component';
+import { DMMF } from '@prisma/generator-helper';
 
 export class ClassComponent extends BaseComponent implements Echoable {
 	name: string;
+	model: DMMF.Model;
 	fields?: FieldComponent[];
 	relationTypes?: string[];
 	enumTypes?: string[] = [];

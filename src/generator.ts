@@ -147,7 +147,10 @@ export class PrismaClassGenerator {
 		);
 
 		const classToPath = files.reduce((result, fileRow) => {
-			const fullPath = path.resolve(fileRow.dir, fileRow.filename);
+			const fullPath = path.resolve(
+				fileRow.dir + '/' + fileRow.foldername,
+				fileRow.filename,
+			);
 			result[fileRow.prismaClass.name] = fullPath;
 			return result;
 		}, {} as Record<string, string>);

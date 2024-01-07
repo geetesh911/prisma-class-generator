@@ -191,16 +191,14 @@ export class PrismaConvertor {
 
 	getClass = (input: ConvertModelInput): ClassComponent => {
 		/** options */
-		const options = Object.assign(
-			{
-				extractRelationFields: null,
-				useGraphQL: false,
-				createAggregateRoot: false,
-				separateRelationFields: false,
-				importSelfRelations: false,
-			},
-			input,
-		);
+		const options = {
+			extractRelationFields: null,
+			useGraphQL: false,
+			createAggregateRoot: false,
+			separateRelationFields: false,
+			importSelfRelations: false,
+			...input,
+		};
 		const {
 			model,
 			extractRelationFields = null,
@@ -270,6 +268,7 @@ export class PrismaConvertor {
 				: enums.map((field) => field.type.toString());
 
 		classComponent.types = typesTypes;
+		classComponent.model = model;
 
 		if (useGraphQL) {
 			const deco = new DecoratorComponent({
