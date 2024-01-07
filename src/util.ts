@@ -14,9 +14,7 @@ export const getRelativeTSPath = (from: string, to: string): string => {
 	let rel = path
 		.relative(path.resolve(path.dirname(from)), to)
 		.replace('.ts', '');
-	// if (path.dirname(from) === path.dirname(to)) {
-	// 	rel = `./${rel}`;
-	// }
+
 	return `./${rel}`;
 };
 

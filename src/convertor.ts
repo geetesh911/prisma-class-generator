@@ -137,7 +137,7 @@ export class PrismaConvertor {
 		if (dmmfField.kind === 'enum') {
 			let type = dmmfField.type;
 			if (dmmfField.isList) {
-				type = arrayify(type);
+				type = `[${type}]`;
 			}
 			decorator.params.push(`() => ${type}`);
 		}
