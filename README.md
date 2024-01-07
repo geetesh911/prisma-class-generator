@@ -62,8 +62,9 @@ export class ProductDto extends IntersectionType(
 1. **Install**
 
     ```shell
-    npm install prisma-class-generator
-    yarn add prisma-class-generator
+    npm install @geetesh911/prisma-class-generator
+    yarn add @geetesh911/prisma-class-generator
+    pnpm add @geetesh911/prisma-class-generator
     ```
 
 2. **Define Generator in `schema.prisma`**
@@ -266,6 +267,8 @@ export class ProductDto extends IntersectionType(
     -   Apply a ! after non-optional class fields to avoid strict mode warnings (Property has no initializer and is not definitely assigned in the constructor.)
 -   _preserveDefaultNullable_
     -   Determines how null fields are handled. When set to **false** (default), it turns all null fields to undefined. Otherwise, it follows Prisma generation and adds null to the type.
+-   _rootNamespaceName_
+    -   Allows to give custom name to root namespace which exports all the classes from the index file.
 
 ### **How it works?**
 

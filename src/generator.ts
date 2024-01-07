@@ -57,6 +57,10 @@ export const PrismaClassGeneratorOptions = {
 		defaultValue: false,
 		desc: 'add aggreate root from nest cqrs',
 	},
+	rootNamespaceName: {
+		defaultValue: 'PrismaModel',
+		desc: 'custom index namespace name',
+	},
 } as const;
 
 export type PrismaClassGeneratorOptionsKeys =
@@ -182,6 +186,10 @@ export class PrismaClassGenerator {
 				'#!{IMPORTS}',
 				imports.map((i) => i.echo('_')).join('\r\n'),
 			)
+				.replace(
+					'#!{NAMESPACE_NAME}',
+					config.rootNamespaceName || 'PrismaModel',
+				)
 				.replace(
 					'#!{RE_EXPORT_CLASSES}',
 					files
