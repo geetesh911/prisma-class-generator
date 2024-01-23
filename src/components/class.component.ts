@@ -13,10 +13,22 @@ export class ClassComponent extends BaseComponent implements Echoable {
 	extra?: string = '';
 	extends?: string = '';
 	createAggregateRoot?: boolean = false;
+	addToObjectMethodToAggregateRoot?: boolean = false;
 	types?: string[];
 
 	echo = () => {
 		const fieldContent = this.fields.map((_field) => _field.echo());
+		const toObjectStr =
+			this.createAggregateRoot && this.addToObjectMethodToAggregateRoot
+				? `toObject(): Omit<${this.name}, 'toObject'> {
+			return {
+				${this.fields
+					.map((_field) => `${_field.name}: this.${_field.name},\n`)
+					.join('')}
+			};
+		}`
+				: '';
+
 		let str = CLASS_TEMPLATE.replace(
 			'#!{DECORATORS}',
 			this.echoDecorators(),
@@ -24,6 +36,7 @@ export class ClassComponent extends BaseComponent implements Echoable {
 			.replace('#!{NAME}', `${this.name}`)
 			.replace('#!{FIELDS}', fieldContent.join('\r\n'))
 			.replace('#!{EXTRA}', this.extra)
+			.replace('#!{TO_OBJECT_METHOD}', toObjectStr)
 			.replace(
 				'#!{EXTENDS}',
 				this.extends ? `extends ${this.extends}` : '',

@@ -9,13 +9,14 @@ generator clent {
 }
 
 generator prismaClassGenerator {
-  provider               = "node -r ts-node/register/transpile-only src/index.ts"
-  output                 = "../src/_gen/prisma-class"
-  dryRun                 = "false"
-  createAggregateRoot    = true
-  useSwagger             = true
-  useGraphQL             = true
-  separateRelationFields = true
+  provider                         = "node -r ts-node/register/transpile-only src/index.ts"
+  output                           = "../src/_gen/prisma-class"
+  dryRun                           = "false"
+  createAggregateRoot              = true
+  useSwagger                       = true
+  useGraphQL                       = true
+  separateRelationFields           = true
+  addToObjectMethodToAggregateRoot = true
 }
 
 enum ProductType {

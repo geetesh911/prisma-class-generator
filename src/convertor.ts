@@ -53,6 +53,7 @@ export interface ConvertModelInput {
 	postfix?: string;
 	useGraphQL?: boolean;
 	createAggregateRoot?: boolean;
+	addToObjectMethodToAggregateRoot?: boolean;
 	separateRelationFields?: boolean;
 	importSelfRelations?: boolean;
 }
@@ -197,6 +198,7 @@ export class PrismaConvertor {
 			createAggregateRoot: false,
 			separateRelationFields: false,
 			importSelfRelations: false,
+			addToObjectMethodToAggregateRoot: false,
 			...input,
 		};
 		const {
@@ -207,6 +209,7 @@ export class PrismaConvertor {
 			createAggregateRoot,
 			separateRelationFields,
 			importSelfRelations,
+			addToObjectMethodToAggregateRoot,
 		} = options;
 
 		/** set class name */
@@ -214,7 +217,11 @@ export class PrismaConvertor {
 		if (postfix) {
 			className += postfix;
 		}
-		const classComponent = new ClassComponent({ name: className });
+		const classComponent = new ClassComponent({
+			name: className,
+			createAggregateRoot,
+			addToObjectMethodToAggregateRoot,
+		});
 
 		/** relation & enums */
 		const relationTypes = uniquify(
@@ -294,6 +301,7 @@ export class PrismaConvertor {
 		if (createAggregateRoot) {
 			classComponent.extends = 'AggregateRoot';
 			classComponent.createAggregateRoot = true;
+			classComponent.addToObjectMethodToAggregateRoot = true;
 		}
 
 		return classComponent;
@@ -347,6 +355,8 @@ export class PrismaConvertor {
 						extractRelationFields: true,
 						useGraphQL: this.config.useGraphQL,
 						createAggregateRoot: this.config.createAggregateRoot,
+						addToObjectMethodToAggregateRoot:
+							this.config.addToObjectMethodToAggregateRoot,
 						separateRelationFields:
 							this.config.separateRelationFields,
 					}),
@@ -368,6 +378,8 @@ export class PrismaConvertor {
 						model,
 						useGraphQL: this.config.useGraphQL,
 						createAggregateRoot: this.config.createAggregateRoot,
+						addToObjectMethodToAggregateRoot:
+							this.config.addToObjectMethodToAggregateRoot,
 						separateRelationFields:
 							this.config.separateRelationFields,
 					}),
@@ -384,6 +396,8 @@ export class PrismaConvertor {
 						extractRelationFields: false,
 						useGraphQL: this.config.useGraphQL,
 						createAggregateRoot: this.config.createAggregateRoot,
+						addToObjectMethodToAggregateRoot:
+							this.config.addToObjectMethodToAggregateRoot,
 						importSelfRelations: true,
 						separateRelationFields:
 							this.config.separateRelationFields,
@@ -396,6 +410,8 @@ export class PrismaConvertor {
 						postfix: 'RelationsAggregateRoot',
 						useGraphQL: this.config.useGraphQL,
 						createAggregateRoot: this.config.createAggregateRoot,
+						addToObjectMethodToAggregateRoot:
+							this.config.addToObjectMethodToAggregateRoot,
 						importSelfRelations: true,
 						separateRelationFields:
 							this.config.separateRelationFields,
@@ -406,6 +422,8 @@ export class PrismaConvertor {
 						model,
 						postfix: 'WithRelationsAggregateRoot',
 						createAggregateRoot: this.config.createAggregateRoot,
+						addToObjectMethodToAggregateRoot:
+							this.config.addToObjectMethodToAggregateRoot,
 						useGraphQL: this.config.useGraphQL,
 						separateRelationFields: false,
 						importSelfRelations: true,

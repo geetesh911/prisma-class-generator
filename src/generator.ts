@@ -61,6 +61,10 @@ export const PrismaClassGeneratorOptions = {
 		defaultValue: 'PrismaModel',
 		desc: 'custom index namespace name',
 	},
+	addToObjectMethodToAggregateRoot: {
+		defaultValue: false,
+		desc: 'add toObject method to aggregate root classes',
+	},
 } as const;
 
 export type PrismaClassGeneratorOptionsKeys =
