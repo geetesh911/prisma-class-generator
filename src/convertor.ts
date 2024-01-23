@@ -280,7 +280,7 @@ export class PrismaConvertor {
 		classComponent.types = typesTypes;
 		classComponent.model = model;
 
-		if (useGraphQL) {
+		if (useGraphQL && !createAggregateRoot) {
 			const deco = new DecoratorComponent({
 				name: 'ObjectType',
 				importFrom: '@nestjs/graphql',

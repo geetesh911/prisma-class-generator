@@ -92,7 +92,10 @@ export class FileComponent implements Echoable {
 	resolveImports() {
 		const generator = PrismaClassGenerator.getInstance();
 
-		if (generator.getConfig().useGraphQL) {
+		if (
+			generator.getConfig().useGraphQL &&
+			!this.prismaClass.createAggregateRoot
+		) {
 			this.registerImport('ID', '@nestjs/graphql');
 			this.registerImport('Int', '@nestjs/graphql');
 			this.registerImport('registerEnumType', '@nestjs/graphql');
