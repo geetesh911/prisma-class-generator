@@ -11,6 +11,7 @@ import {
 	wrapQuote,
 } from './util';
 import { ExtraFieldProps } from './interfaces/extra-field-props.interface';
+import { ClassMetadata } from './interfaces/class-metadata.interface';
 
 /** BigInt, Boolean, Bytes, DateTime, Decimal, Float, Int, JSON, String, $ModelName */
 type DefaultPrismaFieldType =
@@ -56,6 +57,7 @@ export interface ConvertModelInput {
 	addToObjectMethodToAggregateRoot?: boolean;
 	separateRelationFields?: boolean;
 	importSelfRelations?: boolean;
+	metadata?: ClassMetadata;
 }
 
 export class PrismaConvertor {
@@ -210,6 +212,7 @@ export class PrismaConvertor {
 			separateRelationFields,
 			importSelfRelations,
 			addToObjectMethodToAggregateRoot,
+			metadata,
 		} = options;
 
 		/** set class name */
@@ -297,6 +300,8 @@ export class PrismaConvertor {
 				classComponent.extra = extra;
 			}
 		}
+
+		classComponent.metadata = metadata;
 
 		if (createAggregateRoot) {
 			classComponent.extends = 'AggregateRoot';
@@ -401,6 +406,9 @@ export class PrismaConvertor {
 						importSelfRelations: true,
 						separateRelationFields:
 							this.config.separateRelationFields,
+						metadata: {
+							siblingClass: `${model.name}`,
+						},
 					}),
 				),
 				...models.map((model) =>
@@ -415,6 +423,9 @@ export class PrismaConvertor {
 						importSelfRelations: true,
 						separateRelationFields:
 							this.config.separateRelationFields,
+						metadata: {
+							siblingClass: `${model.name}Relations`,
+						},
 					}),
 				),
 				...models.map((model) =>
@@ -427,6 +438,9 @@ export class PrismaConvertor {
 						useGraphQL: this.config.useGraphQL,
 						separateRelationFields: false,
 						importSelfRelations: true,
+						metadata: {
+							siblingClass: `${model.name}WithRelations`,
+						},
 					}),
 				),
 			);

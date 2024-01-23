@@ -129,6 +129,14 @@ export class FileComponent implements Echoable {
 				this.registerImport(type, './' + type.toLowerCase());
 			});
 		}
+
+		if (this.prismaClass.metadata?.siblingClass) {
+			this.registerImport(
+				this.prismaClass.metadata.siblingClass,
+				FileComponent.TEMP_PREFIX +
+					this.prismaClass.metadata.siblingClass,
+			);
+		}
 	}
 
 	write(dryRun: boolean) {

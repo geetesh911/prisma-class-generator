@@ -3,6 +3,7 @@ import { FieldComponent } from './field.component';
 import { CLASS_TEMPLATE } from '../templates/class.template';
 import { BaseComponent } from './base.component';
 import { DMMF } from '@prisma/generator-helper';
+import { ClassMetadata } from '@src/interfaces/class-metadata.interface';
 
 export class ClassComponent extends BaseComponent implements Echoable {
 	name: string;
@@ -15,12 +16,13 @@ export class ClassComponent extends BaseComponent implements Echoable {
 	createAggregateRoot?: boolean = false;
 	addToObjectMethodToAggregateRoot?: boolean = false;
 	types?: string[];
+	metadata?: ClassMetadata;
 
 	echo = () => {
 		const fieldContent = this.fields.map((_field) => _field.echo());
 		const toObjectStr =
 			this.createAggregateRoot && this.addToObjectMethodToAggregateRoot
-				? `toObject(): Omit<${this.name}, 'toObject'> {
+				? `toObject(): ${this.metadata.siblingClass} {
 			return {
 				${this.fields
 					.map((_field) => `${_field.name}: this.${_field.name},\n`)
