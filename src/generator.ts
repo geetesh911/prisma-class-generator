@@ -65,6 +65,10 @@ export const PrismaClassGeneratorOptions = {
 		defaultValue: false,
 		desc: 'add toObject method to aggregate root classes',
 	},
+	addModelNameGetter: {
+		defaultValue: false,
+		desc: 'add modelName getter to class',
+	},
 } as const;
 
 export type PrismaClassGeneratorOptionsKeys =

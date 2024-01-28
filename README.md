@@ -269,12 +269,16 @@ export class ProductDto extends IntersectionType(
     -   Determines how null fields are handled. When set to **false** (default), it turns all null fields to undefined. Otherwise, it follows Prisma generation and adds null to the type.
 -   _rootNamespaceName_
     -   Allows to give custom name to root namespace which exports all the classes from the index file.
+-   _addToObjectMethodToAggregateRoot_
+    -   Allows to add toObject method to aggregate root classes.
+-   _addModelNameGetter_
+    -   Allows to add modelName getter to class.
 
 ### **How it works?**
 
 Prima internally defines metadata as a dmmf object.
 
-[prisma-class-generator](https://github.com/kimjbstar/prisma-class-generator) can automate class definition using this dmmf.
+[@geetesh911/prisma-class-generator](https://github.com/geetesh911/prisma-class-generator) can automate class definition using this dmmf.
 
 It is defined as an additional generator in the `schema.prisma` file and will operate in the `prisma generate` process.
 
@@ -312,4 +316,4 @@ No, but of course, it goes well with NestJS. I'm also planning to support the li
 
 But even if you don't use NestJS, this library will be useful for you if you use class decorator based on reflect-metadata to develop web services.
 
-NOTE: This repository is the extension of `prisma-class-generator`.
+NOTE: This repository is the extension of [prisma-class-generator](https://github.com/kimjbstar/prisma-class-generator).

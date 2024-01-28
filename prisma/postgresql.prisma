@@ -17,6 +17,7 @@ generator prismaClassGenerator {
   useGraphQL                       = true
   separateRelationFields           = true
   addToObjectMethodToAggregateRoot = true
+  addModelNameGetter               = true
 }
 
 enum ProductType {

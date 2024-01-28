@@ -58,6 +58,7 @@ export interface ConvertModelInput {
 	separateRelationFields?: boolean;
 	importSelfRelations?: boolean;
 	metadata?: ClassMetadata;
+	addModelNameGetter?: boolean;
 }
 
 export class PrismaConvertor {
@@ -201,6 +202,7 @@ export class PrismaConvertor {
 			separateRelationFields: false,
 			importSelfRelations: false,
 			addToObjectMethodToAggregateRoot: false,
+			addModelNameGetter: false,
 			...input,
 		};
 		const {
@@ -212,6 +214,7 @@ export class PrismaConvertor {
 			separateRelationFields,
 			importSelfRelations,
 			addToObjectMethodToAggregateRoot,
+			addModelNameGetter,
 			metadata,
 		} = options;
 
@@ -269,6 +272,7 @@ export class PrismaConvertor {
 					skipGraphqlDecorator: createAggregateRoot,
 				}),
 			);
+		classComponent.addModelNameGetter = addModelNameGetter;
 		classComponent.relationTypes =
 			extractRelationFields === false ? [] : relationTypes;
 
@@ -406,6 +410,7 @@ export class PrismaConvertor {
 						importSelfRelations: true,
 						separateRelationFields:
 							this.config.separateRelationFields,
+						addModelNameGetter: this.config.addModelNameGetter,
 						metadata: {
 							siblingClass: `${model.name}`,
 						},
@@ -423,6 +428,7 @@ export class PrismaConvertor {
 						importSelfRelations: true,
 						separateRelationFields:
 							this.config.separateRelationFields,
+						addModelNameGetter: this.config.addModelNameGetter,
 						metadata: {
 							siblingClass: `${model.name}Relations`,
 						},
@@ -438,6 +444,7 @@ export class PrismaConvertor {
 						useGraphQL: this.config.useGraphQL,
 						separateRelationFields: false,
 						importSelfRelations: true,
+						addModelNameGetter: this.config.addModelNameGetter,
 						metadata: {
 							siblingClass: `${model.name}WithRelations`,
 						},

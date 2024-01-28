@@ -17,9 +17,15 @@ export class ClassComponent extends BaseComponent implements Echoable {
 	addToObjectMethodToAggregateRoot?: boolean = false;
 	types?: string[];
 	metadata?: ClassMetadata;
+	addModelNameGetter?: boolean = false;
 
 	echo = () => {
 		const fieldContent = this.fields.map((_field) => _field.echo());
+		const modelNameGetter = this.addModelNameGetter
+			? `get modelName(): string {
+			return '${this.model.name}';
+		}`
+			: '';
 		const toObjectStr =
 			this.createAggregateRoot && this.addToObjectMethodToAggregateRoot
 				? `toObject(): ${this.metadata.siblingClass} {
@@ -38,6 +44,7 @@ export class ClassComponent extends BaseComponent implements Echoable {
 			.replace('#!{NAME}', `${this.name}`)
 			.replace('#!{FIELDS}', fieldContent.join('\r\n'))
 			.replace('#!{EXTRA}', this.extra)
+			.replace('#!{MODEL_NAME_GETTER}', modelNameGetter)
 			.replace('#!{TO_OBJECT_METHOD}', toObjectStr)
 			.replace(
 				'#!{EXTENDS}',
