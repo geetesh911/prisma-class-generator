@@ -69,6 +69,10 @@ export const PrismaClassGeneratorOptions = {
 		defaultValue: false,
 		desc: 'add modelName getter to class',
 	},
+	enableDeepRelations: {
+		defaultValue: false,
+		desc: 'add class with deep relations',
+	},
 } as const;
 
 export type PrismaClassGeneratorOptionsKeys =

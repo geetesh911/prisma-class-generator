@@ -18,6 +18,7 @@ export class ClassComponent extends BaseComponent implements Echoable {
 	types?: string[];
 	metadata?: ClassMetadata;
 	addModelNameGetter?: boolean = false;
+	enableDeepRelations?: boolean = false;
 
 	echo = () => {
 		const fieldContent = this.fields.map((_field) => _field.echo());

@@ -59,6 +59,7 @@ export interface ConvertModelInput {
 	importSelfRelations?: boolean;
 	metadata?: ClassMetadata;
 	addModelNameGetter?: boolean;
+	enableDeepRelations?: true;
 }
 
 export class PrismaConvertor {
@@ -203,6 +204,7 @@ export class PrismaConvertor {
 			importSelfRelations: false,
 			addToObjectMethodToAggregateRoot: false,
 			addModelNameGetter: false,
+			enableDeepRelations: false,
 			...input,
 		};
 		const {
@@ -216,6 +218,7 @@ export class PrismaConvertor {
 			addToObjectMethodToAggregateRoot,
 			addModelNameGetter,
 			metadata,
+			enableDeepRelations,
 		} = options;
 
 		/** set class name */
@@ -239,7 +242,7 @@ export class PrismaConvertor {
 							? true
 							: model.name !== field.type),
 				)
-				.map((v) => v.type),
+				.map((v) => v.type + (enableDeepRelations ? postfix : '')),
 		);
 
 		const typesTypes = uniquify(
@@ -268,11 +271,17 @@ export class PrismaConvertor {
 			.map((field) =>
 				this.convertField({
 					...field,
+					type:
+						field.type +
+						(field.kind === 'object' && enableDeepRelations
+							? postfix
+							: ''),
 					skipSwaggerDecorator: createAggregateRoot,
 					skipGraphqlDecorator: createAggregateRoot,
 				}),
 			);
 		classComponent.addModelNameGetter = addModelNameGetter;
+		classComponent.enableDeepRelations = enableDeepRelations;
 		classComponent.relationTypes =
 			extractRelationFields === false ? [] : relationTypes;
 
@@ -357,6 +366,7 @@ export class PrismaConvertor {
 							this.config.separateRelationFields,
 					}),
 				),
+
 				// mongodb Types support
 				...this.dmmf.datamodel.types.map((model) =>
 					this.getClass({
@@ -448,6 +458,19 @@ export class PrismaConvertor {
 						metadata: {
 							siblingClass: `${model.name}WithRelations`,
 						},
+					}),
+				),
+			);
+		}
+
+		if (this.config.enableDeepRelations) {
+			classes.push(
+				...models.map((model) =>
+					this.getClass({
+						model,
+						useGraphQL: this.config.useGraphQL,
+						postfix: 'WithDeepRelations',
+						enableDeepRelations: this.config.enableDeepRelations,
 					}),
 				),
 			);

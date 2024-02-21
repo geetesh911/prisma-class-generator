@@ -273,6 +273,8 @@ export class ProductDto extends IntersectionType(
     -   Allows to add toObject method to aggregate root classes.
 -   _addModelNameGetter_
     -   Allows to add modelName getter to class.
+-   _enableDeepRelations_
+    -   Allows to add class with deep relations.
 
 ### **How it works?**
 

@@ -18,6 +18,7 @@ generator prismaClassGenerator {
   separateRelationFields           = true
   addToObjectMethodToAggregateRoot = true
   addModelNameGetter               = true
+  enableDeepRelations              = true
 }
 
 enum ProductType {
