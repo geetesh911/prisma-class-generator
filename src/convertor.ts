@@ -276,8 +276,10 @@ export class PrismaConvertor {
 						(field.kind === 'object' && enableDeepRelations
 							? postfix
 							: ''),
-					skipSwaggerDecorator: createAggregateRoot,
-					skipGraphqlDecorator: createAggregateRoot,
+					skipSwaggerDecorator:
+						createAggregateRoot || enableDeepRelations,
+					skipGraphqlDecorator:
+						createAggregateRoot || enableDeepRelations,
 				}),
 			);
 		classComponent.addModelNameGetter = addModelNameGetter;
@@ -413,7 +415,6 @@ export class PrismaConvertor {
 						model,
 						postfix: 'AggregateRoot',
 						extractRelationFields: false,
-						useGraphQL: this.config.useGraphQL,
 						createAggregateRoot: this.config.createAggregateRoot,
 						addToObjectMethodToAggregateRoot:
 							this.config.addToObjectMethodToAggregateRoot,
@@ -431,7 +432,6 @@ export class PrismaConvertor {
 						model,
 						extractRelationFields: true,
 						postfix: 'RelationsAggregateRoot',
-						useGraphQL: this.config.useGraphQL,
 						createAggregateRoot: this.config.createAggregateRoot,
 						addToObjectMethodToAggregateRoot:
 							this.config.addToObjectMethodToAggregateRoot,
@@ -451,7 +451,6 @@ export class PrismaConvertor {
 						createAggregateRoot: this.config.createAggregateRoot,
 						addToObjectMethodToAggregateRoot:
 							this.config.addToObjectMethodToAggregateRoot,
-						useGraphQL: this.config.useGraphQL,
 						separateRelationFields: false,
 						importSelfRelations: true,
 						addModelNameGetter: this.config.addModelNameGetter,
@@ -468,7 +467,6 @@ export class PrismaConvertor {
 				...models.map((model) =>
 					this.getClass({
 						model,
-						useGraphQL: this.config.useGraphQL,
 						postfix: 'WithDeepRelations',
 						enableDeepRelations: this.config.enableDeepRelations,
 					}),
