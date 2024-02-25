@@ -94,7 +94,7 @@ export class FileComponent implements Echoable {
 		const config = generator.getConfig();
 
 		const createGraphqlDecorators = config.modelsForGraphql?.length
-			? config.modelsForGraphql.includes(this.prismaClass.name)
+			? config.modelsForGraphql.includes(this.prismaClass.model.name)
 			: true;
 
 		if (
