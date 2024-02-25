@@ -73,6 +73,10 @@ export const PrismaClassGeneratorOptions = {
 		defaultValue: false,
 		desc: 'add class with deep relations',
 	},
+	modelsForGraphql: {
+		defaultValue: [],
+		desc: 'Specify models to generate for graphql',
+	},
 } as const;
 
 export type PrismaClassGeneratorOptionsKeys =

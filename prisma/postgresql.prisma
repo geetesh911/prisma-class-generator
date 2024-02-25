@@ -19,6 +19,7 @@ generator prismaClassGenerator {
   addToObjectMethodToAggregateRoot = true
   addModelNameGetter               = true
   enableDeepRelations              = true
+  modelsForGraphql                 = ["Product"]
 }
 
 enum ProductType {

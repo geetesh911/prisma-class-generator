@@ -91,9 +91,15 @@ export class FileComponent implements Echoable {
 
 	resolveImports() {
 		const generator = PrismaClassGenerator.getInstance();
+		const config = generator.getConfig();
+
+		const createGraphqlDecorators = config.modelsForGraphql?.length
+			? config.modelsForGraphql.includes(this.prismaClass.name)
+			: true;
 
 		if (
 			generator.getConfig().useGraphQL &&
+			createGraphqlDecorators &&
 			!this.prismaClass.createAggregateRoot
 		) {
 			this.registerImport('ID', '@nestjs/graphql');

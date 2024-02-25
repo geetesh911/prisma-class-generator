@@ -280,6 +280,7 @@ export class PrismaConvertor {
 						createAggregateRoot || enableDeepRelations,
 					skipGraphqlDecorator:
 						createAggregateRoot || enableDeepRelations,
+					modelName: model.name,
 				}),
 			);
 		classComponent.addModelNameGetter = addModelNameGetter;
@@ -295,7 +296,11 @@ export class PrismaConvertor {
 		classComponent.types = typesTypes;
 		classComponent.model = model;
 
-		if (useGraphQL && !createAggregateRoot) {
+		const createGraphqlDecorators = this.config.modelsForGraphql?.length
+			? this.config.modelsForGraphql.includes(model.name)
+			: true;
+
+		if (useGraphQL && createGraphqlDecorators && !createAggregateRoot) {
 			const deco = new DecoratorComponent({
 				name: 'ObjectType',
 				importFrom: '@nestjs/graphql',
@@ -491,7 +496,15 @@ export class PrismaConvertor {
 			field.decorators.push(decorator);
 		}
 
-		if (this.config.useGraphQL && !dmmfField.skipGraphqlDecorator) {
+		const createGraphqlDecorators = this.config.modelsForGraphql?.length
+			? this.config.modelsForGraphql.includes(dmmfField.modelName)
+			: true;
+
+		if (
+			this.config.useGraphQL &&
+			createGraphqlDecorators &&
+			!dmmfField.skipGraphqlDecorator
+		) {
 			const decorator =
 				this.extractTypeGraphQLDecoratorFromField(dmmfField);
 			if (decorator) {
