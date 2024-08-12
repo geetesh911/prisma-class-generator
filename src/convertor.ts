@@ -123,7 +123,7 @@ export class PrismaConvertor {
 		if (type && type !== 'any' && !isJson) {
 			let grahQLType = capitalizeFirst(type);
 			if (grahQLType === 'Number') {
-				grahQLType = 'Int';
+				grahQLType = dmmfField.type;
 			}
 			if (dmmfField.isList) {
 				grahQLType = `[${grahQLType}]`;

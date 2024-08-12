@@ -104,6 +104,7 @@ export class FileComponent implements Echoable {
 		) {
 			this.registerImport('ID', '@nestjs/graphql');
 			this.registerImport('Int', '@nestjs/graphql');
+			this.registerImport('Float', '@nestjs/graphql');
 			this.registerImport('registerEnumType', '@nestjs/graphql');
 			this.registerImport('GraphQLJSON', 'graphql-type-json');
 		}
